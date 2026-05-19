@@ -5,7 +5,6 @@ library(dplyr)
 ############################################################
 # 1. read data
 ############################################################
-setwd("D:/ran/噬菌体-单菌结合项目-20250525/阶段性进展/海水污水处理/20250829/")
 # seu <- readRDS("filtered_seurat_rmrRNA_0.1_10.rds")
 seu <- readRDS("filtered_seurat_0.1_dim12res0.2-fromlinux-20260326.rds")
 color_list <- c(
@@ -19,7 +18,7 @@ Cluster_colors <- colorRampPalette(color_list)(length(Cluster_levels))
 names(Cluster_colors) <- Cluster_levels 
 
 #############################################################
-# 去除全是rRNA的cluster
+# remove rRNA cluster
 #############################################################
 Idents(seu) <- seu$seurat_clusters
 seu <- subset(seu, idents = "3", invert = TRUE)
@@ -83,17 +82,13 @@ DimPlot(
     legend.position = "right"
   )
 
-
-
-
-
 circ_data <- prepare_circlize_data(seu, scale = 0.8)
 
 ############################################################
-# 2 Cluster 修复
+# 2 Cluster refix
 ############################################################
 circ_data <- prepare_circlize_data(seu, scale = 0.65)
-cluster_levels <- as.character(0:15)  # 13是根据Cluster的数量进行更改的
+cluster_levels <- as.character(0:15)  
 
 circ_data$Cluster <- factor(
   circ_data$seurat_clusters,
@@ -101,15 +96,8 @@ circ_data$Cluster <- factor(
 )
 
 ############################################################
-# 3 颜色定义
+# 3 cluster_colors
 ############################################################
-
-# cluster_colors <- c(
-#   "#9DD0C7","#D1392B","#A0CBE8","#499894","#B15928","#ED7A90",
-#   "#EEC79F","#B07AA1","#6DA3E5","#EDC948","#9C755F",
-#   "#797BB7","#B6992D","#9BC985","#6BB7CA","#4E79A7","#8A89A6",
-#   "#818181"
-# )
 cluster_colors <- c(
   "#9DD0C7","#A0CBE8","#F9A825","#499894","#B15928","#ED7A90",
   "#EEC79F","#B07AA1","#6DA3E5","#EDC948","#9C755F",
@@ -140,7 +128,7 @@ species_colors <- setNames(
 )
 
 ############################################################
-# 4 排序
+# 4 
 ############################################################
 
 cluster_levels <- levels(circ_data$Cluster)
@@ -154,7 +142,7 @@ circ_data <- circ_data %>%
   arrange(Cluster, x_polar)
 
 ############################################################
-# 5 主 circlize 图
+# 5  circlize plot
 ############################################################
 
 circos.clear()
@@ -253,7 +241,7 @@ species_df <- circ_data %>%
   )
 
 ############################################################
-# 9 Species 外圈（圆头线段）
+# 9 Species 
 ############################################################
 
 circos.track(
