@@ -75,7 +75,7 @@ DimPlot(
   label = TRUE,
   pt.size = 0.1
 ) +
-  scale_color_manual(values = color_list) +  # 使用上面生成的颜色
+  scale_color_manual(values = color_list) + 
   theme_minimal(base_size = 7) +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
